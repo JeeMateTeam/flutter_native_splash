@@ -62,13 +62,14 @@ void _createAndroidSplash({
   required String gravity,
   required String brandingGravity,
   required bool fullscreen,
+  required bool wearOS,
   required String? backgroundImage,
   required String? darkBackgroundImage,
   required String? android12IconBackgroundColor,
   required String? darkAndroid12IconBackgroundColor,
   required String? screenOrientation,
   String? android12BrandingImagePath,
-  String? android12DarkBrandingImagePath,
+  String? android12DarkBrandingImagePath
 }) {
   _applyImageAndroid(imagePath: imagePath);
 
@@ -138,6 +139,7 @@ void _createAndroidSplash({
     showImage: imagePath != null,
     showBranding: brandingImagePath != null,
     brandingGravity: brandingGravity,
+    wearos: wearOS,
   );
 
   if (darkColor != null || darkBackgroundImage != null) {
@@ -147,6 +149,7 @@ void _createAndroidSplash({
       showImage: imagePath != null,
       showBranding: brandingImagePath != null,
       brandingGravity: brandingGravity,
+      wearos: wearOS,
     );
   }
 
@@ -157,6 +160,7 @@ void _createAndroidSplash({
       showImage: imagePath != null,
       showBranding: brandingImagePath != null,
       brandingGravity: brandingGravity,
+      wearos: wearOS,
     );
     if (darkColor != null || darkBackgroundImage != null) {
       _applyLaunchBackgroundXml(
@@ -166,6 +170,7 @@ void _createAndroidSplash({
         showImage: imagePath != null,
         showBranding: brandingImagePath != null,
         brandingGravity: brandingGravity,
+        wearos: wearOS,
       );
     }
   }
@@ -304,6 +309,7 @@ void _applyLaunchBackgroundXml({
   required String gravity,
   required bool showImage,
   bool showBranding = false,
+  bool wearos = false,
   String brandingGravity = 'bottom',
 }) {
   String brandingGravityValue = brandingGravity;
@@ -320,6 +326,13 @@ void _applyLaunchBackgroundXml({
     final splashItem =
         XmlDocument.parse(_androidLaunchItemXml).rootElement.copy();
     splashItem.getElement('bitmap')?.setAttribute('android:gravity', gravity);
+
+    if (wearos) {
+      splashItem.getElement('bitmap')?.setAttribute('android:height', '48dp');
+      splashItem.getElement('bitmap')?.setAttribute('android:width', '48dp');
+    }
+
+
     items.add(splashItem);
   }
 

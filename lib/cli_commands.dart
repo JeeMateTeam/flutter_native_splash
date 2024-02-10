@@ -127,6 +127,8 @@ void _createSplashByConfig(Map<String, dynamic> config) {
   String? android12DarkColor;
   String? android12BrandingImage;
   String? android12DarkBrandingImage;
+  final bool wearOS = config[_Parameter.wearOS] as bool? ?? false;
+
 
   if (config[_Parameter.android12Section] != null) {
     final android12Config =
@@ -174,6 +176,7 @@ void _createSplashByConfig(Map<String, dynamic> config) {
         android12BrandingImagePath: android12BrandingImage,
         android12DarkBrandingImagePath:
             android12DarkBrandingImage ?? android12BrandingImage,
+        wearOS: wearOS
       );
     } else {
       print('Android folder not found, skipping Android splash update...');
@@ -447,6 +450,7 @@ class _Parameter {
   static const plistFiles = 'info_plist_files';
   static const web = 'web';
   static const webImageMode = 'web_image_mode';
+  static const wearOS = 'wear_os';
 
   static List<String> all = [
     android,
@@ -494,5 +498,6 @@ class _Parameter {
     plistFiles,
     web,
     webImageMode,
+    wearOS
   ];
 }
