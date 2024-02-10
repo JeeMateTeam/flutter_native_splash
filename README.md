@@ -167,6 +167,9 @@ flutter_native_splash:
   #       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top], );
   #fullscreen: true
 
+  # wear_os allows you to force the size of the icon required by the store since wearos 4
+  # wear_os: true
+
   # If you have changed the name(s) of your info.plist file(s), you can specify the filename(s)
   # with the info_plist_files parameter.  Remove only the # characters in the three lines below,
   # do not remove any spaces:
