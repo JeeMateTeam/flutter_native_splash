@@ -56,20 +56,20 @@ void _createAndroidSplash({
   required String? android12BackgroundColor,
   required String? android12DarkBackgroundColor,
   required String? brandingImagePath,
+  required String? brandingBottomPadding,
   required String? brandingDarkImagePath,
   required String? color,
   required String? darkColor,
   required String gravity,
   required String brandingGravity,
   required bool fullscreen,
-  required bool wearOS,
   required String? backgroundImage,
   required String? darkBackgroundImage,
   required String? android12IconBackgroundColor,
   required String? darkAndroid12IconBackgroundColor,
   required String? screenOrientation,
   String? android12BrandingImagePath,
-  String? android12DarkBrandingImagePath
+  String? android12DarkBrandingImagePath,
 }) {
   _applyImageAndroid(imagePath: imagePath);
 
@@ -139,7 +139,7 @@ void _createAndroidSplash({
     showImage: imagePath != null,
     showBranding: brandingImagePath != null,
     brandingGravity: brandingGravity,
-    wearos: wearOS,
+    brandingBottomPadding: brandingBottomPadding,
   );
 
   if (darkColor != null || darkBackgroundImage != null) {
@@ -149,7 +149,7 @@ void _createAndroidSplash({
       showImage: imagePath != null,
       showBranding: brandingImagePath != null,
       brandingGravity: brandingGravity,
-      wearos: wearOS,
+      brandingBottomPadding: brandingBottomPadding,
     );
   }
 
@@ -160,7 +160,7 @@ void _createAndroidSplash({
       showImage: imagePath != null,
       showBranding: brandingImagePath != null,
       brandingGravity: brandingGravity,
-      wearos: wearOS,
+      brandingBottomPadding: brandingBottomPadding,
     );
     if (darkColor != null || darkBackgroundImage != null) {
       _applyLaunchBackgroundXml(
@@ -170,7 +170,7 @@ void _createAndroidSplash({
         showImage: imagePath != null,
         showBranding: brandingImagePath != null,
         brandingGravity: brandingGravity,
-        wearos: wearOS,
+        brandingBottomPadding: brandingBottomPadding,
       );
     }
   }
@@ -309,7 +309,7 @@ void _applyLaunchBackgroundXml({
   required String gravity,
   required bool showImage,
   bool showBranding = false,
-  bool wearos = false,
+  String? brandingBottomPadding,
   String brandingGravity = 'bottom',
 }) {
   String brandingGravityValue = brandingGravity;
@@ -326,20 +326,16 @@ void _applyLaunchBackgroundXml({
     final splashItem =
         XmlDocument.parse(_androidLaunchItemXml).rootElement.copy();
     splashItem.getElement('bitmap')?.setAttribute('android:gravity', gravity);
-
-    if (wearos) {
-      splashItem.getElement('bitmap')?.setAttribute('android:height', '48dp');
-      splashItem.getElement('bitmap')?.setAttribute('android:width', '48dp');
-    }
-
-
     items.add(splashItem);
   }
 
   if (showBranding && gravity != brandingGravityValue) {
     //add branding when splash image and branding image are not at the same position
+    final androidBrandingItemXml = _androidBrandingItemXml.replaceAll(
+        "{bottom_padding}", brandingBottomPadding ?? "0");
+    print('[Android] branding bottom padding: ${brandingBottomPadding ?? "0"}');
     final brandingItem =
-        XmlDocument.parse(_androidBrandingItemXml).rootElement.copy();
+        XmlDocument.parse(androidBrandingItemXml).rootElement.copy();
     if (brandingGravityValue == 'bottomRight') {
       brandingGravityValue = 'bottom|right';
     } else if (brandingGravityValue == 'bottomLeft') {
