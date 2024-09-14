@@ -135,7 +135,6 @@ void _createSplashByConfig(Map<String, dynamic> config) {
   String? android12DarkBrandingImage;
   final bool wearOS = config[_Parameter.wearOS] as bool? ?? false;
 
-
   if (config[_Parameter.android12Section] != null) {
     final android12Config =
         config[_Parameter.android12Section] as Map<String, dynamic>;
