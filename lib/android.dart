@@ -313,7 +313,7 @@ void _applyLaunchBackgroundXml({
   required String gravity,
   required bool showImage,
   bool showBranding = false,
-  wearos: wearOS,
+  bool wearos = false,
   String? brandingBottomPadding,
   String brandingGravity = 'bottom',
 }) {
