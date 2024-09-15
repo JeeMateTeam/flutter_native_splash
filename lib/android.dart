@@ -63,6 +63,7 @@ void _createAndroidSplash({
   required String gravity,
   required String brandingGravity,
   required bool fullscreen,
+  required bool wearOS,
   required String? backgroundImage,
   required String? darkBackgroundImage,
   required String? android12IconBackgroundColor,
@@ -139,6 +140,7 @@ void _createAndroidSplash({
     showImage: imagePath != null,
     showBranding: brandingImagePath != null,
     brandingGravity: brandingGravity,
+    wearos: wearOS,
     brandingBottomPadding: brandingBottomPadding,
   );
 
@@ -160,6 +162,7 @@ void _createAndroidSplash({
       showImage: imagePath != null,
       showBranding: brandingImagePath != null,
       brandingGravity: brandingGravity,
+      wearos: wearOS,
       brandingBottomPadding: brandingBottomPadding,
     );
     if (darkColor != null || darkBackgroundImage != null) {
@@ -170,6 +173,7 @@ void _createAndroidSplash({
         showImage: imagePath != null,
         showBranding: brandingImagePath != null,
         brandingGravity: brandingGravity,
+        wearos: wearOS,
         brandingBottomPadding: brandingBottomPadding,
       );
     }
@@ -309,6 +313,7 @@ void _applyLaunchBackgroundXml({
   required String gravity,
   required bool showImage,
   bool showBranding = false,
+  wearos: wearOS,
   String? brandingBottomPadding,
   String brandingGravity = 'bottom',
 }) {
@@ -326,6 +331,12 @@ void _applyLaunchBackgroundXml({
     final splashItem =
         XmlDocument.parse(_androidLaunchItemXml).rootElement.copy();
     splashItem.getElement('bitmap')?.setAttribute('android:gravity', gravity);
+
+    if (wearos) {
+      splashItem.getElement('bitmap')?.setAttribute('android:height', '48dp');
+      splashItem.getElement('bitmap')?.setAttribute('android:width', '48dp');
+    }
+    
     items.add(splashItem);
   }
 
